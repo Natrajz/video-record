@@ -10,6 +10,8 @@
 
 @synthesize parentView, outputPath, output, session, previewLayer;
 
+AVCaptureSession *captureSession;
+
 -(void) pluginInitialize{
   // start as transparent
   self.webView.opaque = NO;
