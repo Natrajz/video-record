@@ -515,7 +515,7 @@ AVCaptureSession *captureSession;
             [captureSession addInput:audioInput];
 
         NSError *error;
-        AVCaptureDeviceInput *deviceInput = [AVCaptureDeviceInput deviceInputWithDevice:inputDevice error:&error];
+        AVCaptureDeviceInput *deviceInput = [AVCaptureDeviceInput deviceInputWithDevice:deviceInput error:&error];
         if ([captureSession canAddInput:deviceInput]) {
          [captureSession addInput:deviceInput];
         } else {
@@ -526,7 +526,7 @@ AVCaptureSession *captureSession;
         [output startRecordingToOutputFileURL:fileURI recordingDelegate:self];
 
         //return true to ensure callback fires
-        CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     }];
 }
