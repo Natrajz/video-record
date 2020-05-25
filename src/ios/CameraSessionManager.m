@@ -235,6 +235,11 @@
         [self setVideoDeviceInput:nil];
       }
 
+      if (self.audioInput != nil) {
+        [self.session removeInput:[self audioInput]];
+        [self audioInput:nil];
+      }
+
       AVCaptureDevice *videoDevice = nil;
 
       videoDevice = [self cameraWithPosition:self.defaultCamera];
