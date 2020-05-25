@@ -250,11 +250,19 @@
         [self.session addInput:videoDeviceInput];
         [self setVideoDeviceInput:videoDeviceInput];
       }
-
+      
+      //Mark:- Audio Device Config
+      
+      AVCaptureDevice *audioDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeAudio];
+      AVCaptureDeviceInput * audioInput = [AVCaptureDeviceInput deviceInputWithDevice:audioDevice error:nil];
+      [self.session addInput:audioInput];
+      
+      
       [self updateOrientation:[self getCurrentOrientation]];
       [self.session commitConfiguration];
       self.device = videoDevice;
 
+      
       completion(success);
   });
 }

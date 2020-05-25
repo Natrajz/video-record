@@ -503,16 +503,20 @@ AVCaptureSession *captureSession;
         output.movieFragmentInterval = kCMTimeInvalid;
 
         if ([captureSession canAddOutput:output]) {
+            NSLog(@"canAddOutput");
          [captureSession addOutput:output];
+            
         } else {
             NSLog(@"canAddOutput error");
         }
 
-        AVCaptureDevice *audioCaptureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeAudio];
-        AVCaptureDeviceInput *audioInput = [AVCaptureDeviceInput deviceInputWithDevice:audioCaptureDevice error:nil];
+        
+        
+//        AVCaptureDevice *audioCaptureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeAudio];
+//        AVCaptureDeviceInput *audioInput = [AVCaptureDeviceInput deviceInputWithDevice:audioCaptureDevice error:nil];
 
-        if ([captureSession canAddInput:audioInput])
-            [captureSession addInput:audioInput];
+//        if ([captureSession canAddInput:audioInput])
+//            [captureSession addInput:audioInput];
 
         NSError *error;
         AVCaptureDevice *inputDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
@@ -529,6 +533,18 @@ AVCaptureSession *captureSession;
         //return true to ensure callback fires
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+        
+    //Mark:- Check audio permission
+        
+        [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
+            if (granted) {
+                NSLog(@"Permission granted");
+            }
+            else {
+                NSLog(@"Permission denied");
+            }
+        }];
+        
     }];
 }
 
