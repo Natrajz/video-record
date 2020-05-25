@@ -10,7 +10,7 @@
 
 @synthesize parentView, outputPath, output, session, previewLayer;
 
-AVCaptureSession *captureSession;
+// AVCaptureSession *captureSession;
 
 -(void) pluginInitialize{
   // start as transparent
@@ -497,14 +497,14 @@ AVCaptureSession *captureSession;
 
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];*/
 
-       CMTime maxDuration = CMTimeMakeWithSeconds(1800, 1);
+        CMTime maxDuration = CMTimeMakeWithSeconds(1800, 1);
         output = [[AVCaptureMovieFileOutput alloc]init];
         output.maxRecordedDuration = maxDuration;
         output.movieFragmentInterval = kCMTimeInvalid;
 
-        if ([captureSession canAddOutput:output]) {
+        if ([[self.session canAddOutput:output]) {
             NSLog(@"canAddOutput");
-         [captureSession addOutput:output];
+         [[self.session addOutput:output];
             
         } else {
             NSLog(@"canAddOutput error");
@@ -521,13 +521,13 @@ AVCaptureSession *captureSession;
         NSError *error;
         AVCaptureDevice *inputDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
         AVCaptureDeviceInput *deviceInput = [AVCaptureDeviceInput deviceInputWithDevice:inputDevice error:&error];
-        if ([captureSession canAddInput:deviceInput]) {
-         [captureSession addInput:deviceInput];
+        if ([[self.session canAddInput:deviceInput]) {
+         [[self.session addInput:deviceInput];
         } else {
             NSLog(@"deviceInput: %@", error);
         }
 
-        [captureSession startRunning];
+        [[self.session startRunning];
         [output startRecordingToOutputFileURL:fileURI recordingDelegate:self];
 
         //return true to ensure callback fires

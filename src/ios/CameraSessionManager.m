@@ -128,14 +128,14 @@
         self.videoDeviceInput = videoDeviceInput;
       }
 
- // audio added
-      AVCaptureDevice *audioDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeAudio];
-      AVCaptureDeviceInput * audioInput = [AVCaptureDeviceInput deviceInputWithDevice:audioDevice error:nil];
+//  // audio added
+//       AVCaptureDevice *audioDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeAudio];
+//       AVCaptureDeviceInput * audioInput = [AVCaptureDeviceInput deviceInputWithDevice:audioDevice error:nil];
       
-       if ([self.session canAddInput:audioInput]) {
-        [self.session addInput:audioInput];
-        self.audioInput = audioInput;
-      }
+//        if ([self.session canAddInput:audioInput]) {
+//         [self.session addInput:audioInput];
+//         self.audioCaptureDeviceInput = audioInput;
+//       }
 
 
       AVCaptureStillImageOutput *stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
