@@ -476,7 +476,7 @@
         [UIApplication sharedApplication].idleTimerDisabled = YES;
 
 //        NSString *camera = command.arguments[0];
-        CDVPluginResult *pluginResult;
+        // CDVPluginResult *pluginResult;
 
         if(self.movieFileOutput == nil){
           [self setupMovieFileCapture];
@@ -529,7 +529,7 @@
 
 
                       //return true to ensure callback fires
-                      pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+                      CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
                       [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
                       }
                             // CMTime maxDuration = CMTimeMakeWithSeconds(1800, 1);
