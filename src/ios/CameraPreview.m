@@ -507,7 +507,7 @@
         [self initializeAudioCaptureSessionInput];
 
          if(self.audioCaptureDeviceInput != nil){
-            AVCaptureConnection *audioConnection = [self.AVCaptureMovieFileOutput connectionWithMediaType:AVMediaTypeAudio];
+            AVCaptureConnection *audioConnection = [self.movieFileOutput connectionWithMediaType:AVMediaTypeAudio];
             audioConnection.enabled = YES;
         }
 
