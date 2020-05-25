@@ -478,7 +478,7 @@
 //        NSString *camera = command.arguments[0];
         CDVPluginResult *pluginResult;
 
-        If(self.movieFileOutput == nil){
+        if(self.movieFileOutput == nil){
           [self setupMovieFileCapture];
         }
 
