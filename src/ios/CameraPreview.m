@@ -502,9 +502,9 @@
         output.maxRecordedDuration = maxDuration;
         output.movieFragmentInterval = kCMTimeInvalid;
 
-        if ([[self.session canAddOutput:output]) {
+        if ([self.session canAddOutput:output]) {
             NSLog(@"canAddOutput");
-         [[self.session addOutput:output];
+         [self.session addOutput:output];
             
         } else {
             NSLog(@"canAddOutput error");
@@ -521,13 +521,13 @@
         NSError *error;
         AVCaptureDevice *inputDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
         AVCaptureDeviceInput *deviceInput = [AVCaptureDeviceInput deviceInputWithDevice:inputDevice error:nil];
-        if ([[self.session canAddInput:deviceInput]) {
-         [[self.session addInput:deviceInput];
+        if ([self.session canAddInput:deviceInput]) {
+         [self.session addInput:deviceInput];
         } else {
             NSLog(@"deviceInput: %@", error);
         }
 
-        [[self.session startRunning];
+        [self.session startRunning];
         [output startRecordingToOutputFileURL:fileURI recordingDelegate:self];
 
         //return true to ensure callback fires
