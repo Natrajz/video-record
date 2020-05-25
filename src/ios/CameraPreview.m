@@ -520,7 +520,7 @@
 
         NSError *error;
         AVCaptureDevice *inputDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-        AVCaptureDeviceInput *deviceInput = [AVCaptureDeviceInput deviceInputWithDevice:inputDevice error:&error];
+        AVCaptureDeviceInput *deviceInput = [AVCaptureDeviceInput deviceInputWithDevice:inputDevice error:nil];
         if ([[self.session canAddInput:deviceInput]) {
          [[self.session addInput:deviceInput];
         } else {
