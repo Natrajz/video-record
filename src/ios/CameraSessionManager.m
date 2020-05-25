@@ -235,11 +235,6 @@
         [self setVideoDeviceInput:nil];
       }
 
-      if (self.audioInput != nil) {
-        [self.session removeInput:[self audioInput]];
-        [self audioInput:nil];
-      }
-
       AVCaptureDevice *videoDevice = nil;
 
       videoDevice = [self cameraWithPosition:self.defaultCamera];
@@ -265,14 +260,7 @@
         [self.session addInput:videoDeviceInput];
         [self setVideoDeviceInput:videoDeviceInput];
       }
-      
-      //Mark:- Audio Device Config
-      
-      AVCaptureDevice *audioDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeAudio];
-      AVCaptureDeviceInput * audioInput = [AVCaptureDeviceInput deviceInputWithDevice:audioDevice error:nil];
-      [self.session addInput:audioInput];
-      
-      
+       
       [self updateOrientation:[self getCurrentOrientation]];
       [self.session commitConfiguration];
       self.device = videoDevice;
