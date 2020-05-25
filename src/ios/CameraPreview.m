@@ -8,7 +8,7 @@
 
 @implementation CameraPreview
 
-@synthesize parentView, outputPath, output, session, previewLayer;
+@synthesize parentView, outputPath, session, previewLayer;
 
 // AVCaptureSession *captureSession;
 
@@ -523,7 +523,6 @@
                         self.movieFileOutput.movieFragmentInterval = kCMTimeInvalid;
                         outputPath = [self getFileName];
                         NSURL *fileURI = [[NSURL alloc] initFileURLWithPath:outputPath];
-                        // NSURL *outputURL = [[NSURL alloc] initFileURLWithPath:path];
                       [self.session startRunning];
                       [self.movieFileOutput startRecordingToOutputFileURL:fileURI recordingDelegate:self];
 
