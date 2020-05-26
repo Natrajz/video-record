@@ -416,11 +416,11 @@ public class CameraPreview extends CordovaPlugin implements CameraActivity.Camer
   private String getFilePath(String filename) {
     // Add number suffix if file exists
     int i = 1;
-    String fileName = filename;
-    while (new File(VIDEO_FILE_PATH + fileName + VIDEO_FILE_EXTENSION).exists()) {
-      fileName = filename + '_' + i;
-      i++;
-    }
+    String fileName = filename + String.valueOf(Math.round(Math.random() * 200));
+    // while (new File(VIDEO_FILE_PATH + fileName + VIDEO_FILE_EXTENSION).exists()) {
+    //   fileName = filename + '_' + i;
+    //   i++;
+    // }
     return VIDEO_FILE_PATH + fileName + VIDEO_FILE_EXTENSION;
   }
 
