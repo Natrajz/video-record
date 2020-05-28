@@ -48,7 +48,6 @@
 @property (nonatomic) CGFloat videoZoomFactor;
 @property (nonatomic) AVCaptureDevice *device;
 @property (nonatomic) AVCaptureDeviceInput *videoDeviceInput;
-@property(nonatomic) AVCaptureDeviceInput *audioCaptureDeviceInput;
 @property (nonatomic) AVCaptureStillImageOutput *stillImageOutput;
 @property (nonatomic) AVCaptureVideoDataOutput *dataOutput;
 @property (nonatomic, assign) id delegate;

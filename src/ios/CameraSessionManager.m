@@ -128,16 +128,6 @@
         self.videoDeviceInput = videoDeviceInput;
       }
 
-//  // audio added
-//       AVCaptureDevice *audioDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeAudio];
-//       AVCaptureDeviceInput * audioInput = [AVCaptureDeviceInput deviceInputWithDevice:audioDevice error:nil];
-      
-//        if ([self.session canAddInput:audioInput]) {
-//         [self.session addInput:audioInput];
-//         self.audioCaptureDeviceInput = audioInput;
-//       }
-
-
       AVCaptureStillImageOutput *stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
       if ([self.session canAddOutput:stillImageOutput]) {
         [self.session addOutput:stillImageOutput];
@@ -260,12 +250,11 @@
         [self.session addInput:videoDeviceInput];
         [self setVideoDeviceInput:videoDeviceInput];
       }
-       
+
       [self updateOrientation:[self getCurrentOrientation]];
       [self.session commitConfiguration];
       self.device = videoDevice;
 
-      
       completion(success);
   });
 }

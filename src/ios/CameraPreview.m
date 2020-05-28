@@ -8,9 +8,7 @@
 
 @implementation CameraPreview
 
-@synthesize parentView, outputPath, session, previewLayer;
-
-// AVCaptureSession *captureSession;
+@synthesize parentView, outputPath, output, session, previewLayer;
 
 -(void) pluginInitialize{
   // start as transparent
@@ -476,17 +474,11 @@
         [UIApplication sharedApplication].idleTimerDisabled = YES;
 
 //        NSString *camera = command.arguments[0];
-        // CDVPluginResult *pluginResult;
-
-        if(self.movieFileOutput == nil){
-          [self setupMovieFileCapture];
-        }
-
-        
+        CDVPluginResult *pluginResult;
 
         // make output device
-        // outputPath = [self getFileName];
-        // NSURL *fileURI = [[NSURL alloc] initFileURLWithPath:outputPath];
+        outputPath = [self getFileName];
+        NSURL *fileURI = [[NSURL alloc] initFileURLWithPath:outputPath];
 //        [self.sessionManager.videoFileOutput startRecordingToOutputFileURL:fileURI recordingDelegate:self];
 //
 //        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"start recording"];
@@ -494,95 +486,46 @@
 //
 
 
-        /*if (self.sessionManager != nil) {
+        if (self.sessionManager != nil) {
             [self.sessionManager startRecordVideo:fileURI];
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"start recording"];
         } else {
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Session not started"];
         }
 
-        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];*/
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 
-
-        [self initializeAudioCaptureSessionInput];
-
-         if(self.audioCaptureDeviceInput != nil){
-            AVCaptureConnection *audioConnection = [self.movieFileOutput connectionWithMediaType:AVMediaTypeAudio];
-            audioConnection.enabled = YES;
-        }
-
-        dispatch_async(self.sessionManager.sessionQueue, ^{
-
-          double delayInSeconds = 0.5;
-            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-
-                   dispatch_after(popTime, self.sessionManager.sessionQueue, ^(void){
-
-                      if(self.movieFileOutput != nil){
-                        self.movieFileOutput.maxRecordedDuration = CMTimeMakeWithSeconds(1800, 1);
-                        self.movieFileOutput.movieFragmentInterval = kCMTimeInvalid;
-                        outputPath = [self getFileName];
-                        NSURL *fileURI = [[NSURL alloc] initFileURLWithPath:outputPath];
-                      [self.session startRunning];
-                      [self.movieFileOutput startRecordingToOutputFileURL:fileURI recordingDelegate:self];
-
-
-                      //return true to ensure callback fires
-                      CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-                      [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-                      }
-                            // CMTime maxDuration = CMTimeMakeWithSeconds(1800, 1);
-                            // output = [[AVCaptureMovieFileOutput alloc]init];
-                            // output.maxRecordedDuration = maxDuration;
-                            // output.movieFragmentInterval = kCMTimeInvalid;
-
-                            // if ([self.session canAddOutput:output]) {
-                            //     NSLog(@"canAddOutput");
-                            // [self.session addOutput:output];
-                                
-                            // } else {
-                            //     NSLog(@"canAddOutput error");
-                            // }
-
-                            // [self.session startRunning];
-                            // [output startRecordingToOutputFileURL:fileURI recordingDelegate:self];
-
-
-
-                   });
-
-          });
-        
-        
+//        CMTime maxDuration = CMTimeMakeWithSeconds(1800, 1);
+//        output = [[AVCaptureMovieFileOutput alloc]init];
+//        output.maxRecordedDuration = maxDuration;
+//        output.movieFragmentInterval = kCMTimeInvalid;
+//
+//        if ([captureSession canAddOutput:output]) {
+//         [captureSession addOutput:output];
+//        } else {
+//            NSLog(@"canAddOutput error");
+//        }
+//
 //        AVCaptureDevice *audioCaptureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeAudio];
 //        AVCaptureDeviceInput *audioInput = [AVCaptureDeviceInput deviceInputWithDevice:audioCaptureDevice error:nil];
-
+//
 //        if ([captureSession canAddInput:audioInput])
 //            [captureSession addInput:audioInput];
-
-        // NSError *error;
-        // AVCaptureDevice *inputDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-        // AVCaptureDeviceInput *deviceInput = [AVCaptureDeviceInput deviceInputWithDevice:inputDevice error:nil];
-        // if ([self.session canAddInput:deviceInput]) {
-        //  [self.session addInput:deviceInput];
-        // } else {
-        //     NSLog(@"deviceInput: %@", error);
-        // }
-
-
-
-        
-    //Mark:- Check audio permission
-        
-        // [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
-        //     if (granted) {
-        //         NSLog(@"Permission granted");
-        //     }
-        //     else {
-        //         NSLog(@"Permission denied");
-        //     }
-        // }];
-        
+//
+//        NSError *error;
+//        AVCaptureDeviceInput *deviceInput = [AVCaptureDeviceInput deviceInputWithDevice:inputDevice error:&error];
+//        if ([captureSession canAddInput:deviceInput]) {
+//         [captureSession addInput:deviceInput];
+//        } else {
+//            NSLog(@"deviceInput: %@", error);
+//        }
+//
+//        [captureSession startRunning];
+//        [output startRecordingToOutputFileURL:fileURI recordingDelegate:self];
+//
+//        //return true to ensure callback fires
+//        CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+//        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     }];
 }
 
@@ -958,61 +901,4 @@
       }
     }];
 }
-
-// Initializes audio capture device
-// Note: Ensure this is called within a a session configuration block
-- (void)initializeAudioCaptureSessionInput
-{
-    // only initialize if not initialized already
-    if(self.audioCaptureDeviceInput == nil){
-        NSError *error = nil;
-
-        AVCaptureDevice *audioCaptureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeAudio];
-        AVCaptureDeviceInput *audioDeviceInput = [AVCaptureDeviceInput deviceInputWithDevice:audioCaptureDevice error:&error];
-
-        if (error || audioDeviceInput == nil) {
-            RCTLogWarn(@"%s: %@", __func__, error);
-        }
-
-        else{
-
-            // test if we can activate the device input.
-            // If we fail, means it is already being used
-            BOOL setActive = [[AVAudioSession sharedInstance] setActive:YES error:&error];
-
-            if (!setActive) {
-                RCTLogWarn(@"Audio device could not set active: %s: %@", __func__, error);
-            }
-
-            else if ([self.session canAddInput:audioDeviceInput]) {
-                [self.session addInput:audioDeviceInput];
-                self.audioCaptureDeviceInput = audioDeviceInput;
-
-                // inform that audio has been resumed
-                // if(self.onAudioConnected){
-                //     self.onAudioConnected(nil);
-                // }
-            }
-            else{
-                RCTLog(@"Cannot add audio input");
-            }
-        }
-
-        // if we failed to get the audio device, fire our interrupted event
-        // if(self.audioCaptureDeviceInput == nil){
-        //     self.onAudioInterrupted(nil);
-        // }
-    }
-}
-
-- (void)setupMovieFileCapture
-{
-    AVCaptureMovieFileOutput *movieFileOutput = [[AVCaptureMovieFileOutput alloc] init];
-
-    if ([self.session canAddOutput:movieFileOutput]) {
-        [self.session addOutput:movieFileOutput];
-        self.movieFileOutput = movieFileOutput;
-    }
-}
-
 @end

@@ -50,11 +50,8 @@
 @property (nonatomic) CameraRenderController *cameraRenderController;
 @property (nonatomic) NSString *onPictureTakenHandlerId;
 @property (nonatomic, retain) UIView *parentView;
-@property (nonatomic) AVCaptureDeviceInput *videoDeviceInput;
-@property(nonatomic) AVCaptureDeviceInput *audioCaptureDeviceInput;
-@property(nonatomic) AVCaptureMovieFileOutput *movieFileOutput;
 @property NSString *outputPath;
-// @property AVCaptureMovieFileOutput *output;
+@property AVCaptureMovieFileOutput *output;
 @property AVCaptureSession *session;
 @property AVCaptureVideoPreviewLayer *previewLayer;
 
